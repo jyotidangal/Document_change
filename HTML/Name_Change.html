@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विशेष साधारण सभा</title>
+     <!-- Required Css file-->
+     <link rel="stylesheet" href="../CSS/style.css">
+     <link rel="stylesheet" href="../CSS/nepali.datepicker.v4.0.8.min.css">
+     <!-- Required scripts -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+     <!-- External JavaScript file -->
+     <script src="../JS/Name_Change_Script.js" defer></script>
+     <script src="../JS/nepali.datepicker.v4.0.8.min.js" type="text/javascript"></script>
+     <!-- Internal Css-->
+    <style>
+        .page {
+            width: 7.27in; /* A4 width minus margins */
+            min-height: 10in; /* A4 height minus margins */
+            padding: 0.5in;
+            box-sizing: border-box;
+            font-size: 12pt; /* Body text */
+            line-height: 1.2; /* Reduced from 1.5 for compactness */
+            border: none;
+            background: none;
+        }
+        #page1 {
+            min-height: auto;
+            max-height: 10in; /* Cap at one page height */
+        }
+        h2 {
+            font-size: 16pt; /* Heading size */
+            margin-bottom: 0.2in; /* Reduced from 0.5in */
+            border: none;
+        }
+        h3 {
+            font-size: 14pt; /* Subheading size */
+            margin-bottom: 0.1in; /* Reduced from 0.3in */
+            border: none;
+        }
+        p, ul, li {
+            font-size: 12pt; /* Body text */
+            margin-bottom: 0.1in; /* Reduced from 0.2in */
+            border: none;
+            text-align: justify;
+        }
+        ul {
+            padding-left: 0.5in; /* Keep some indentation for readability */
+        }
+        #report {
+            width: 8.27in; /* Full A4 width */
+            margin: 0 auto;
+            border: none;
+        }
+        .hidden {
+            display: none;
+        }
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>विशेष साधारण सभा</h1>
+    <div class="container">
+        <p class="instructions">
+            कृपया विवरणहरू निम्नानुसार भर्नुहोस्:
+            <ul>
+                <li>नेपाली क्षेत्रहरू (जस्तै,हालको कम्पनी नाम (नेपाली) , अध्यक्ष) नेपालीमा भर्नुपर्नेछ।</li>
+                <li>हालको ठेगाना र नयाँ ठेगानामा अनिवार्य रूपमा जिल्ला, स्थानीय तह, र वडा नं. समावेश गर्नुपर्नेछ।</li>
+                <li>अंग्रेजी क्षेत्रहरू (यदि कुनै छन् भने) अंग्रेजीमा भर्नुपर्नेछ।</li>
+                
+            </ul>
+            <span style="text-align: center;">प्रत्येक क्षेत्रको लेबल अनुसार भाषा मिलाउनुहोस्।</span>
+        </p><br><br>
+        <form id="meeting-form">
+            <div class="form-group">
+                <label>मिति (विक्रम सम्वत):</label>
+                <input type="text" id="meeting_date" placeholder="YYYY/MM/DD (BS)" required>
+            </div>
+            <div class="form-group">
+                <label>कम्पनीको हालको नाम (नेपाली):</label>
+                <input type="text" id="company_current_nepali" required>
+            </div>
+            <div class="form-group">
+                <label>कम्पनीको हालको नाम  (अंग्रेजी):</label>
+                <input type="text" id="company_current_english" required>
+            </div> 
+           
+            <div class="form-group">
+                <label>कम्पनीको नयाँ नाम (नेपाली):</label>
+                <input type="text" id="company_new_nepali" required>
+            </div>
+            <div class="form-group">
+                <label>कम्पनीको नयाँ नाम (अंग्रेजी):</label>
+                <input type="text" id="company_new_english" required>
+            </div> 
+            <div class="form-group">
+                <label>अध्यक्ष:</label>
+                <input type="text" id="chairperson" required>
+            </div>
+            <div class="form-group textarea-group">
+                <label>उपस्थित व्यक्तिहरू (नाम, पद):</label>
+                <div id="attendees-list">
+                    <!-- Dynamic attendee entries will be added here -->
+                </div>
+                <button type="button" id="add-attendee">+ थप्नुहोस्</button>
+            </div>
+            <button type="submit">रिपोर्ट तयार गर्नुहोस्</button>
+        </form>
+        
+        <div id="report" class="hidden">
+            <div class="page" id="page1">
+                <h2 style="text-align: center;">बिशेष बैठक</h2>
+                <p>आज मिति <span id="r_meeting_date1"></span> गतेको दिन यस <span id="r_company_current_nepali1"></span> को विशेष बैठक <span id="r_chairperson1"></span> को अध्यक्षतामा निम्न स्थानमा बसी निर्णय गरियो।</p>
+                <h3 style="font-weight: bold; text-align: left;"><u>उपस्थिति:</u></h3>
+                <ol style="list-style-type: none;"id="r_presence1"></ol>
+                
+                <h3 style="text-align: left;">सभाको बैधानिकता:</h3>
+                <p>नियमावली बमोजिम बोलाएको आजको यस विशेष बैठकमा शत प्रतिशत शेयरको प्रतिनिधि हुने गरी शेयरधनिको उपस्थिति भएकोले सभा बैधानिक रहेको छ।</p>
+                <h3 style="font-weight: bold;text-align: left;"><u>प्रस्तावहरु:</u></h3>
+                <p>१. कम्पनीको नाम परिवर्तन गरी प्रवन्धपत्रको दफा १ तथा नियमावलीको नियम १ संशोधन गर्ने सम्बन्धी विशेष प्रस्ताब।</p>
+                <p>२.विविध</p>
+                <h3 style="font-weight: bold;text-align: left;" ><u>निर्णयहरु:</u></h3>
+            
+                <p>१. विशेष प्रस्ताब नं १ उपर छलफल गर्दा कम्पनीको उद्देश्य अनुरुप कार्य गर्नको लागि हाल कायम रहेको कम्पनीको नाम परिवर्तन गर्नुपर्ने भएकोले हाल कायम रहेको कम्पनीको नाम <span id="r_company_current_nepali1a"></span> जसलाई अंग्रेजीमा <span id="r_company_current_english1a"></span> बाट परिवर्तन गरी <span id="r_company_new_nepali1a"></span> जसलाई अंग्रेजीमा <span id="r_company_new_english1a"></span> कायम गर्ने र सोही अनुसार प्रवन्धपत्रको दफा १ तथा नियमावलीको नियम १ मा निम्नानुसार संशोधन गरी संशोधित दफा तथा नियम अभिलेखको लागि कार्यालयमा पेश गर्ने विशेष प्रस्ताब पारित गरियो।</p>
+                <p><strong><u style="font-weight: bold;">प्रवन्धपत्रको दफा १ मा भएको संशोधन:</u></strong><br>
+                 १) <u style="font-weight: bold;">कम्पनीको नाम:</u> यस कम्पनीको नाम <span id="r_company_new_nepali1b"></span> हुनेछ। यसलाई अंग्रेजीमा <span id="r_company_new_english1b"></span> भनिनेछ।</p>
+                <p><strong><u style="font-weight: bold;">नियमावलीको नियम १ मा भएको संशोधन:</u></strong><br>
+                        <br>
+               १) <u style="font-weight: bold;">कम्पनीको नाम:</u>  यस कम्पनीको नाम <span id="r_company_new_nepali1c"></span> हुनेछ। यसलाई अंग्रेजीमा <span id="r_company_new_english1c"></span> भनिनेछ।</p>
+               <br>
+                    <p style="text-align: center;">छलफलका लागि अन्य विषयवस्तु नभएकोले आजको सभा समापन गरियो।</p>
+                </div>
+
+            <div class="page hidden" id="page2">
+                <div style="text-align: center;">
+                    <h2><strong><span id="r_company_current_nepali2"></span></strong></h2>
+                    को<br>
+                    नियमावली भएको संशोधन
+                </div>
+                <br><br>
+                <h4><u>नियमावलीको नियम १ मा भएको संशोधन:</u></h4>
+                <p><u>कम्पनीको नाम: </u>यस कम्पनीको नाम <span id="r_company_new_nepali2"></span> हुनेछ। यसलाई अंग्रेजीमा <span id="r_company_new_english2"></span> भनिनेछ।</p><br><br><br><br>
+               
+              <p style="text-align: left;">
+                <strong><u>प्रमाणित गर्ने</u></strong><br><br>
+                ……………………..........<br>
+                नाम: <span id="r_chairperson2"></span><br>
+                पद: अध्यक्ष<br>
+                मिति: <span id="r_meeting_date2"></span></p>
+            </div>
+
+            <div class="page hidden" id="page3">
+                <div style="text-align: center;">
+                    <h2><strong><span id="r_company_current_nepali2"></span></strong></h2>
+                    को<br>
+                    प्रवन्धपत्रमा  भएको संसोधन
+                </div> <br><br>
+                <h4><u>प्रबन्धपत्रको दफा १ मा भएको संशोधन:</u></h4>
+                <p><u>कम्पनीको नाम: </u>यस कम्पनीको नाम <span id="r_company_new_nepali3"></span> हुनेछ। यसलाई अंग्रेजीमा <span id="r_company_new_english3"></span> भनिनेछ।</p>
+                
+                <br><p style="text-align: left;">
+                <strong><u>प्रमाणित गर्ने</u> </strong><br><br>
+                ……………………...<br>
+                नाम: <span id="r_chairperson3"></span><br>
+                पद: अध्यक्ष<br>
+                मिति: <span id="r_meeting_date3"></span></p>
+            </div>
+
+            <div class="page hidden" id="page4">
+                <h2><span id="r_company_current_nepali4"></span></h2>
+                <p style="text-align: right;">
+                    मिति: <span id="r_meeting_date4"></span>
+                </p>
+                <p>
+                    श्रीमान कम्पनी रजिस्ट्रार ज्यु<br>
+                    कम्पनी रजिस्ट्रार कार्यालय<br>
+                    त्रिपुरेश्वर, काठमाडौँ<br>
+                </p>
+                <br><br>
+                
+                <p style="text-align: center;">
+                    <strong>विषय: नाम परिवर्तनको संशोधित दफा तथा नियम अभिलेख गरी पाऊँ</strong>
+                </p><br>
+                <p style="margin: 0;">
+                    महोदय,
+                </p>
+                <p style="text-indent: 1em; margin: 0;">
+                    उपरोक्त सम्बन्धमा यस कार्यालयमा दर्ता कायम रहेको यस प्रा.लि. को नाम परिवर्तन गर्ने निर्णय भई सोही अनुसारको संशोधित दफा तथा नियम अभिलेख गर्नुपर्ने भएकोले सो सम्बन्धी सम्पूर्ण कागजातहरु यसै निवेदन साथै राखी पेश गरिएको छ। अत: निवेदन माग बमोजिम संशोधित दफा तथा नियम अभिलेख गरी पाऊँ।</span>
+                </p>
+
+                <p>
+                    <strong>संलग्न कागजातहरु:</strong><br>
+                    <ol style="list-style-type: devanagari">
+                        <li>विशेष बैठक</li>
+                        <li>दफा संशोधन</li>
+                        <li>नियम संशोधन</li>
+                        <li>तीन महले विवरण</li>
+                    </ol>
+                </p>
+                <br><br>
+                <p style="text-align: right;">
+                    <strong><u>निवेदक</u></strong><br>
+                    <span id="r_company_current_nepali4a"></span><br>
+                    <span id="r_chairperson4"></span><br>
+                    अध्यक्ष<br>
+                </p>
+            </div>
+            <div class="page hidden" id="page5">
+                <div style="text-align: center;">
+                    <h2><strong><span id="r_company_current_nepali2"></span></strong></h2>
+                    को<br>
+                    तिन महले
+                </div> <br><br>
+                <table id="page5-table" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black; padding: 8px;">साबिकमा भएको अवस्था</th>
+                            <th style="border: 1px solid black; padding: 8px;">हालको यवस्था</th>
+                            <th style="border: 1px solid black; padding: 8px;">संसोधन गर्नुपर्ने कारण</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         
+                    <tr>
+                    <td style="border: 1px solid black; padding: 8px;">
+                        <strong><u>प्रवन्धपत्रको दफा १ मा:</u></strong><br><br>
+                        <strong><u>कम्पनीको नाम:</u></strong> यस कम्पनीको नाम 
+                        <span id="r_company_current_nepali5"></span> छ। यसलाई अंग्रेजीमा 
+                        <span id="r_company_current_english5"></span> भनिन्छ।
+                    </td>
+                    <td style="border: 1px solid black; padding: 8px;">
+                        <strong><u>प्रवन्धपत्रको दफा १ मा भएको संशोधन:</u></strong><br><br>
+                        <strong><u>कम्पनीको नाम:</u></strong> यस कम्पनीको नाम 
+                        <span id="r_company_new_nepali5"></span> हुनेछ। यसलाई अंग्रेजीमा 
+                        <span id="r_company_new_english5"></span> भनिनेछ।
+                    </td>
+                    <td style="border: 1px solid black; padding: 8px;">
+                        कम्पनीको उद्देश्य अनुरूप कार्य गर्नको लागि उपयुक्त नभएकोले।
+                    </td>
+                   </tr>
+                      
+                    </tbody>
+                    
+                </table>
+            </div>
+             
+        
+            <div class="navigation">
+                <button id="prevBtn" disabled>Previous</button>
+                <button id="nextBtn">Next</button>
+                <button id="downloadPdf">Download as PDF</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

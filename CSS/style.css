@@ -1,0 +1,152 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-left: 5px solid #007bff;
+            border-radius: 5px;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e60b0b;
+            transition: all 0.3s ease;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .instructions:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: default;
+        }
+
+        .instructions ul {
+            margin: 10px 0 0 20px; /* Adjust spacing for the list */
+            padding-left: 0; /* Remove default padding */
+        }
+
+        .instructions li {
+            list-style-type: disc; /* Bullet points */
+            margin-bottom: 8px; /* Space between items */
+        }
+        #meeting-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+        }
+
+        /* .form-group label::after {
+            content: "*";
+            color: red;
+            display: inline;
+        } */
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group.textarea-group {
+            grid-column: span 2;
+        }
+        #meeting-form button[type="submit"] {
+            grid-column: span 2;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .page {
+            max-height: 80vh;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            page-break-after: always;
+        }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .navigation button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .navigation button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .navigation #downloadPdf {
+            background: #dc3545;
+        }
+        .attendee-entry {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .attendee-entry input, .attendee-entry select {
+            flex: 1;
+        }
+        .attendee-entry button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        #add-attendee {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+        #r_presence1 {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        @media print {
+            .page {
+                break-after: always;
+                margin: 0;
+                padding: 20px;
+            }
+            .navigation {
+                display: none;
+            }
+        }
+        
