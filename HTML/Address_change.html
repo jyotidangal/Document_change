@@ -17,49 +17,79 @@
     <!-- Internal Css-->
     <style>
         .page {
-            width: 7.27in; /* A4 width minus margins */
-            min-height: 10in; /* A4 height minus margins */
-            padding: 0.5in;
+            width: 210mm; /* A4 width */
+            min-height: auto; /* Allow content to determine height */
+            padding: 10mm;
             box-sizing: border-box;
             font-size: 12pt; /* Body text */
-            line-height: 1.2; /* Reduced from 1.5 for compactness */
-            border: none;
-            background: none;
+            line-height: 1.5;
+            margin: 0 auto;
+            background-color: white;
+            position: relative;
+            overflow: visible;
         }
-        #page1 {
-            min-height: auto;
-            max-height: 10in; /* Cap at one page height */
-        }
+        
         h2 {
             font-size: 16pt; /* Heading size */
-            margin-bottom: 0.2in; /* Reduced from 0.5in */
-            border: none;
+            margin-bottom: 10mm;
         }
+        
         h3 {
             font-size: 14pt; /* Subheading size */
-            margin-bottom: 0.1in; /* Reduced from 0.3in */
-            border: none;
+            margin-bottom: 5mm;
         }
+        
         p, ul, li {
             font-size: 12pt; /* Body text */
-            margin-bottom: 0.1in; /* Reduced from 0.2in */
-            border: none;
+            margin-bottom: 3mm;
             text-align: justify;
         }
+        
         ul {
-            padding-left: 0.5in; /* Keep some indentation for readability */
+            padding-left: 15mm; /* Keep some indentation for readability */
         }
+        
         #report {
-            width: 8.27in; /* Full A4 width */
+            width: 210mm; /* A4 width */
             margin: 0 auto;
-            border: none;
         }
+        
         .hidden {
             display: none;
         }
+        
         .navigation {
             margin-top: 20px;
             text-align: center;
+            padding: 10px;
+        }
+        
+        .navigation button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            #report, #report * {
+                visibility: visible;
+            }
+            
+            .page {
+                break-after: always;
+                visibility: visible;
+                position: relative;
+                left: 0;
+                top: 0;
+            }
+            
+            .navigation {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -127,13 +157,17 @@
                     <p>१. विशेष प्रस्ताब नं १ उपर छलफल गर्दा कम्पनीको उद्देश्य अनुरुप कार्य गर्नको लागि हाल कायम रहेको कम्पनीको ठेगाना उपयुक्त नभई ठेगाना परिवर्तन गर्नुपर्ने भएकोले हाल कायम रहेको कम्पनीको ठेगाना <span id="r_current_address1"></span> बाट परिवर्तन गरी <span id="r_new_address1"></span> कायम गर्ने र सोही अनुसार प्रवन्धपत्रको दफा २ तथा नियमावलीको नियम २ मा निम्नानुसार संशोधन गरी संशोधित दफा तथा नियम अभिलेखको लागि कार्यालयमा पेश गर्ने विशेष प्रस्ताब पारित गरियो।</p>
                     
 
-                <p><strong><u style="font-weight: bold;">प्रवन्धपत्रको दफा २ मा भएको संशोधन:</u></strong><br>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <p><strong><u style="font-weight: bold;">प्रवन्धपत्रको दफा २ मा भएको संशोधन:</u></strong><br>
                     २) <u style="font-weight: bold;">कम्पनीको रजिष्टर्ड कार्यालय रहने ठेगाना:</u> यस कम्पनीको रजिष्टर्ड कार्यालय <span id="r_new_address1a"></span> मा रहनेछ।</p>
+                </div>
+                
+                <div style="margin-top: 10px; margin-bottom: 10px;">
                     <p><strong><u style="font-weight: bold;">नियमावलीको नियम २ मा भएको संशोधन:</u></strong><br>
-                        <br>
                     २)<u style="font-weight: bold;">कम्पनीको रजिष्टर्ड कार्यालय रहने ठेगाना:</u>  यस कम्पनीको रजिष्टर्ड कार्यालय <span id="r_new_address1b"></span> मा रहनेछ।</p>
-                    <br>
-                    <p style="text-align: center;">छलफलका लागि अन्य विषयवस्तु नभएकोले आजको सभा समापन गरियो।</p>
+                </div>
+                
+                <p style="text-align: center; margin-top: 15px;">छलफलका लागि अन्य विषयवस्तु नभएकोले आजको सभा समापन गरियो।</p>
                 </div>
 
             <div class="page hidden" id="page2">
@@ -241,7 +275,7 @@
                         <tr>
                             <td style="border: 1px solid black; padding: 8px;">
                                 <strong><u>नियमावलीको नियम २ मा भएको:</u></strong><br><br>
-                                <strong><u>कम्पनीको रजिष्टर्ड कार्यालय रहने ठेगाना:</u></strong> यस कम्पनीको रजिष्टर्ड कार्यालय 
+                                <strong><u>कम्पनीको रजिष्टर्ड कार्यालय रहने ठेग��ना:</u></strong> यस कम्पनीको रजिष्टर्ड कार्यालय 
                                 <span id="r_current_address5a"></span> मा रहने छ।
                             </td>
                             <td style="border: 1px solid black; padding: 8px;">
