@@ -16,6 +16,45 @@
     <script src="../JS/nepali.datepicker.v4.0.8.min.js" type="text/javascript"></script>
     <!-- Internal Css-->
     <style>
+        @media print {
+
+
+            #page5-table {
+        border-collapse: collapse !important;
+        border: 1px solid black !important;
+    }
+    #page5-table th, #page5-table td {
+        border: 1px solid black !important;
+        padding: 8px !important;
+    }
+          @page {
+            margin: 10px 0;
+            size: A4 portrait;
+          }
+        
+          body * {
+            visibility: hidden;
+          }
+        
+          #report, #report * {
+            visibility: visible;
+          }
+        
+          #report {
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+        
+          .page {
+            page-break-after: always;
+            display: block !important;
+          }
+        
+          .navigation {
+            display: none !important;
+          }
+        }
         .page {
             width: 210mm; /* A4 width */
             min-height: auto; /* Allow content to determine height */
@@ -70,28 +109,8 @@
             cursor: pointer;
         }
         
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            
-            #report, #report * {
-                visibility: visible;
-            }
-            
-            .page {
-                break-after: always;
-                visibility: visible;
-                position: relative;
-                left: 0;
-                top: 0;
-            }
-            
-            .navigation {
-                display: none;
-            }
-        }
-    </style>
+        </style>
+        
 </head>
 <body>
     <h1>विशेष साधारण सभा</h1>
@@ -297,8 +316,26 @@
                 <button id="prevBtn" disabled>Previous</button>
                 <button id="nextBtn">Next</button>
                 <button id="downloadPdf">Download as PDF</button>
+                <button onclick="printReport()">Print Report</button>
             </div>
         </div>
     </div>
+    <script>
+    function printReport() {
+        const report = document.getElementById('report');
+        const pages = report.querySelectorAll('.page');
+        
+        // Hide all pages
+        pages.forEach(page => page.classList.add('hidden'));
+        
+        // Trigger print
+        window.print();
+        
+        // Re-hide pages after printing
+        pages.forEach(page => page.classList.add('hidden'));
+    }
+    
+        </script>
+        
 </body>
 </html>
